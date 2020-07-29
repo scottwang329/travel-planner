@@ -1,6 +1,5 @@
 package com.travelplanner.travelplanner_server.mongodb.dal;
 
-
 import com.travelplanner.travelplanner_server.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -25,6 +24,13 @@ public class UserDAL {
 
     public User createUser (User user) {
         return mongoTemplate.insert(user);
+    }
+
+    public String findIdByUsername(String username){
+        Query query = new Query();
+        query.addCriteria(Criteria.where("username").is(username));
+        User user = mongoTemplate.findOne(query, User.class);
+        return user.getId();
     }
 
     public User findUserByUsername(String username) {

@@ -3,8 +3,11 @@ package com.travelplanner.travelplanner_server.restservice.payload;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
+import java.util.List;
+
 @Getter
-public class ErrorResponse {
-    private String message;
+@AllArgsConstructor
+public class PlanRequest {
+    private String name;
+    private List<String> place_id;
 }

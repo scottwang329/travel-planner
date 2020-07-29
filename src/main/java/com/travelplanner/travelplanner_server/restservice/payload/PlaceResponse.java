@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class ErrorResponse {
-    private String message;
+public class PlaceResponse {
+    private String status;
+    private PlaceData data;
 }

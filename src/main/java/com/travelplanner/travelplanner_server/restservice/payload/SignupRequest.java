@@ -6,6 +6,9 @@ import lombok.Getter;
 public class SignupRequest {
     private String username;
     private String password;
-    private String first_name;
-    private String last_name;
+    private String passwordConfirmation;
+    private String firstname;
+    private String lastname;
+    private String email;
+    private String profileUrl;
 }

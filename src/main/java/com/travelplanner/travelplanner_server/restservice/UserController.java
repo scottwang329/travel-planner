@@ -1,12 +1,9 @@
 package com.travelplanner.travelplanner_server.restservice;
 
 import com.travelplanner.travelplanner_server.exception.DuplicateUserException;
-import com.travelplanner.travelplanner_server.exception.WrongFileException;
 import com.travelplanner.travelplanner_server.exception.FailedAuthenticationException;
-import com.travelplanner.travelplanner_server.model.UploadFile;
 import com.travelplanner.travelplanner_server.model.UsedToken;
 
-import com.travelplanner.travelplanner_server.mongodb.dal.FileDAL;
 import com.travelplanner.travelplanner_server.mongodb.dal.TokenDAL;
 import com.travelplanner.travelplanner_server.services.JwtUserDetailsService;
 import com.travelplanner.travelplanner_server.validator.UserValidator;
@@ -14,22 +11,18 @@ import com.travelplanner.travelplanner_server.mongodb.dal.UserDAL;
 import com.travelplanner.travelplanner_server.model.User;
 import com.travelplanner.travelplanner_server.restservice.config.JwtTokenUtil;
 import com.travelplanner.travelplanner_server.restservice.payload.*;
-import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.*;
 import org.mindrot.jbcrypt.BCrypt;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class UserController {
@@ -38,8 +31,6 @@ public class UserController {
     private UserDAL userDAL;
     @Autowired
     private TokenDAL tokenDAL;
-    @Autowired
-    private FileDAL fileDAL;
     @Autowired
     private UserValidator userValidator;
     @Autowired
@@ -129,27 +120,5 @@ public class UserController {
         }
 
         return ResponseEntity.ok(new JwtResponse("Successfully Signout!"));
-    }
-
-    // request to upload a file
-    @RequestMapping(value="/uploadfile", method=RequestMethod.POST)
-    public ResponseEntity uploadFile(@RequestParam(value="file") MultipartFile file) throws IOException {
-        if(file.isEmpty()){
-            throw new WrongFileException();
-        }
-        String fileName = file.getOriginalFilename();
-        try{
-            UploadFile uploadFile = new UploadFile();
-            uploadFile.setFilename(fileName);
-            uploadFile.setContent(new Binary(file.getBytes()));
-            uploadFile.setContentType(file.getContentType());
-            uploadFile.setSize(file.getSize());
-            fileDAL.createFile(uploadFile);
-            System.out.println("Successfully uploadedFile");
-        }catch(IOException e){
-            e.printStackTrace();;
-            throw new WrongFileException();
-        }
-        return ResponseEntity.ok(new JwtResponse("Successfully uploaded file!"));
     }
 }

@@ -47,6 +47,9 @@ public class VoteService {
     public void syncRedisToDB() {
         List<Object> txResults = redisDAL.getAllUserVotesAndCountAndDelete();
         Map<String, Object> map = (Map<String, Object>) txResults.get(0);
+        if (map.size() == 0) {
+            return;
+        }
         List<UserPlaceVote> failedVotes = userPlaceVoteDAL.insertVoteResults(redisDAL.convertVoteMapToObject(map));
         Map<String, Long> placeVoteResult = (Map<String, Long>) txResults.get(1);
         for (UserPlaceVote failedVote: failedVotes) {

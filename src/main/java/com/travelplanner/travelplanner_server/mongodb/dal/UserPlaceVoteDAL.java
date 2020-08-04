@@ -90,11 +90,11 @@ public class UserPlaceVoteDAL {
 //        mongoTemplate.updateFirst(query, update, Place.class);
 //    }
 //
-//    public boolean hasVotedBefore(String place_id, String user_id) {
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("place_id").is(place_id).and("user_id").is(user_id));
-//        return mongoTemplate.exists(query, UserPlaceVote.class);
-//    }
+    public boolean hasVotedBefore(String place_id, String user_id) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("place_id").is(place_id).and("user_id").is(user_id));
+        return mongoTemplate.exists(query, UserPlaceVote.class);
+    }
 
 
 }

@@ -3,6 +3,7 @@ package com.travelplanner.travelplanner_server.model;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,4 +19,6 @@ public class UserPlaceVote {
     private String user_id;
     private String place_id;
     private Date createdAt;
+    @Transient
+    private Integer vote;
 }

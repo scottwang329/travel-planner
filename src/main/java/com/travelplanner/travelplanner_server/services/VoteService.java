@@ -86,6 +86,9 @@ public class VoteService {
             count = count + 1;
             placeVoteResult.put(failedVote.getPlace_id(), count);
         }
-        userPlaceVoteDAL.updateVoteCount(placeVoteResult);
+        placeVoteResult.values().removeIf(votes -> votes == 0);
+        if (placeVoteResult.size() > 0) {
+            userPlaceVoteDAL.updateVoteCount(placeVoteResult);
+        }
     }
 }

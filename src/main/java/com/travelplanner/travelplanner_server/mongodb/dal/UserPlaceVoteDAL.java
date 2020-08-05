@@ -122,9 +122,6 @@ public class UserPlaceVoteDAL {
         BulkOperations bulkOperations = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, Place.class);
         for (Map.Entry<String, Integer> entry: countMap.entrySet()) {
             Integer votes = entry.getValue();
-            if (votes == 0) {
-                continue;
-            }
             String placeId = entry.getKey();
             Query query = new Query();
             query.addCriteria(Criteria.where("id").is(placeId));

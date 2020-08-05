@@ -16,7 +16,7 @@ public class QuartzConfig {
     @Bean
     public Trigger voteSyncJobTrigger(JobDetail voteSyncJobDetail) {
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule()
-                .withIntervalInMinutes(1)
+                .withIntervalInMinutes(30)
                 .repeatForever();
         return TriggerBuilder.newTrigger().forJob(voteSyncJobDetail)
                 .withIdentity(VOTE_SYNC_JOB_IDENTITY)

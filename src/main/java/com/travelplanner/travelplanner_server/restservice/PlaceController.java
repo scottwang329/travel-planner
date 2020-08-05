@@ -79,8 +79,8 @@ public class PlaceController {
         List<Place> places = new ArrayList<>();
         if (query != null) {
             places = placeDAL.getAllPlaceFromCity(city, query);
-            if (places.size() < 30) {
-                places = googlePlaceClient.getCityPlacesWithQuery(city, query, 30);
+            if (places.size() < 20) {
+                places = googlePlaceClient.getCityPlacesWithQuery(city, query, 20);
                 for (Place place: places) {
                     place.setCity(city);
                 }
@@ -89,8 +89,8 @@ public class PlaceController {
             }
         } else {
             places = placeDAL.getAllPlaceFromCity(city);
-            if (places.size() < 30) {
-                places = googlePlaceClient.getCityPlaces(city, 30);
+            if (places.size() < 20) {
+                places = googlePlaceClient.getCityPlaces(city, 20);
                 for (Place place : places) {
                     place.setCity(city);
                 }
